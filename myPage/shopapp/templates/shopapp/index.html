@@ -1,0 +1,22 @@
+{% extends 'shopapp/base.html' %}
+
+{% block title %}
+Index title
+{% endblock %}
+
+{% block body %}
+
+<h1>Index body</h1>
+{% lorem 4 p random %}
+
+<h3>It is {% now "jS F Y H:i" %}</h3>
+
+<p>List: {{ list }}</p>
+<p>Sliced list {{ list|slice:":5" }}</p>
+
+
+<p>name :{{ name }}</p>
+<p>NAME :{{ name|upper }}</p>
+<p>Length: {{ name|length }}</p>
+
+{% endblock %}
