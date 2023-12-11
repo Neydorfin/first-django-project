@@ -6,17 +6,15 @@ Index title
 
 {% block body %}
 
-<h1>Index body</h1>
-{% lorem 4 p random %}
 
-<h3>It is {% now "jS F Y H:i" %}</h3>
+<div>
+    <h2>Links: </h2>
+    <ul>
+        <li><a href="/shop/products">Products</a></li>
+        <li><a href="/shop/orders">Orders</a></li>
+    </ul>
+</div>
 
-<p>List: {{ list }}</p>
-<p>Sliced list {{ list|slice:":5" }}</p>
 
-
-<p>name :{{ name }}</p>
-<p>NAME :{{ name|upper }}</p>
-<p>Length: {{ name|length }}</p>
 
 {% endblock %}
