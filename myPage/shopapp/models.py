@@ -10,10 +10,16 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     archived = models.BooleanField(default=False)
 
+    def __str__(self) -> str:
+        return f"{self.pk}. {self.name}"
+
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     delivery_address = models.TextField(blank=True)
     promocode = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
-    products = models.ManyToManyField(Product ,related_name="orders")
+    products = models.ManyToManyField(Product, related_name="orders")
+
+    def __str__(self) -> str:
+        return f"{self.pk}. {self.user}: {self.delivery_address}"
