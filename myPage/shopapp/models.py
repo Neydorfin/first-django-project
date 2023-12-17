@@ -20,6 +20,7 @@ class Order(models.Model):
     promocode = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     products = models.ManyToManyField(Product, related_name="orders")
+    done = models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return f"{self.pk}. {self.user}: {self.delivery_address}"

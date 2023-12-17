@@ -15,6 +15,15 @@ def make_unarchived(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset
     queryset.update(archived=False)
 
 
+@admin.action(description="Mark order as done")
+def make_done(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: QuerySet) -> None:
+    queryset.update(done=True)
+
+
+@admin.action(description="Unmark order as done")
+def make_undone(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: QuerySet) -> None:
+    queryset.update(done=False)
+
 class OrderInline(admin.StackedInline):
     model = Product.orders.through
 
@@ -78,6 +87,10 @@ class ProductInline(admin.StackedInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
+    actions = [
+        make_done,
+        make_undone,
+    ]
     inlines = [ProductInline]
     list_display = (
         "pk",
@@ -85,6 +98,7 @@ class OrderAdmin(admin.ModelAdmin):
         "delivery_address",
         "promocode",
         "created_at",
+        "done",
     )
     list_display_links = (
         "pk",
