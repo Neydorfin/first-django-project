@@ -1,0 +1,32 @@
+{% extends "shopapp/base.html" %}
+
+{% block title %}
+Uploading File
+{% endblock title %}
+
+{% block body %}
+
+<h1>Upload your file</h1>
+
+<div>
+    <form method="POST", enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>
+            <input type="file" name="isFile" id="isFileId">
+        </p>
+        <button type="submit">Upload</button>
+    </form>
+</div>
+<div>
+    <p>
+        File : {{name}}
+    </p>
+    <p>
+        {% if size == "error" %}
+            Size : <p style='color:red'> Ошибка: Файл слишком большой!!! </p> 
+        {% else %}
+            Size : {{size}} bytes
+        {% endif %}
+    </p>
+</div>
+{% endblock body %}

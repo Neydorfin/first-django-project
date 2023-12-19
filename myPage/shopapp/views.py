@@ -1,7 +1,7 @@
-from itertools import product
 import random
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
+from django.core.files.storage import FileSystemStorage
 
 from shopapp.models import Order, Product
 
@@ -26,3 +26,18 @@ def order_page(request: HttpRequest) -> HttpResponse:
         "orders" : Order.objects.select_related("user").prefetch_related("products").all()
     }
     return render(request, 'shopapp/order-list.html', context=context)
+
+
+def upload_file(request: HttpRequest) -> HttpResponse:
+    context = {}
+    if request.method == "POST" and request.FILES.get('isFile'):
+        file = request.FILES.get('isFile')
+        context["name"] = file.name
+        if file.size < 1_000_000:
+            context["size"] = file.size
+            fs = FileSystemStorage()
+            filename = fs.save(file.name, file)
+        else:
+            context["size"] = "error"
+    
+    return render(request, "shopapp/upload-file.html", context=context)
