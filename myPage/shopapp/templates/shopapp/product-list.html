@@ -7,6 +7,9 @@ Product List
 {% block body %}
 <h1>Product List</h1>
 <div>
+    <a href={% url "shopapp:create_product" %} >Create</a>
+</div>
+<div>
     {% if products %}
         {% for product in products %}
             <span>
@@ -24,6 +27,6 @@ Product List
     {% endif %}
 </div>
 
-<a href="/shop">Back</a>
+<a href={% url "shopapp:index" %} >Back</a>
 
 {% endblock body %}

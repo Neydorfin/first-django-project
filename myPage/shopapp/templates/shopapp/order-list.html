@@ -6,18 +6,22 @@ Order List
 
 {% block body %}
 <h1>Order List</h1>
+<p>
+    <a href={% url "shopapp:create_order" %} >Create</a>
+</p>
 {% if orders %}
 <div>
     {% for order in orders %}
+        <hr>
         <p>Order by: {% firstof order.user.username order.user.firstname %}</p>
         <p>Delivery Address: {{order.delivery_address}}</p>
+        <p>Promocode <code>{{order.promocode}}</code></p>
         <h4>Products: </h4>
         <ul style="list-style: none;">
             {% for product in order.products.all %}
                 <li>{{product.name}} -> {{product.price}}</li>
             {% endfor %}
         </ul>
-        <p>Promocode <code>{{order.promocode}}</code></p>
     {% endfor %}
 
 
@@ -26,6 +30,6 @@ Order List
 <h2>No order yet</h2>
 {% endif %}
 
-<a href="/shop">Back</a>
+<a href={% url "shopapp:index" %} >Back</a>
 
 {% endblock body %}
