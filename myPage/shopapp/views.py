@@ -1,7 +1,9 @@
 import random
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpRequest, HttpResponse
 from django.core.files.storage import FileSystemStorage
+from django.urls import reverse
+from shopapp.forms import OrderForm, ProductForm
 
 from shopapp.models import Order, Product
 
@@ -41,3 +43,34 @@ def upload_file(request: HttpRequest) -> HttpResponse:
             context["size"] = "error"
     
     return render(request, "shopapp/upload-file.html", context=context)
+
+
+def create_product(request: HttpRequest) -> HttpResponse:
+    if request.method == "POST":
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.save()
+            url = reverse("shopapp:products")
+            return redirect(url)
+    else:
+        form = ProductForm()
+    context = {
+        "form": form
+    }
+    return render(request, "shopapp/create-product.html", context=context)
+
+
+def create_order(request: HttpRequest) -> HttpResponse:
+    print(request.user)
+    if request.method == "POST":
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            form.save()
+            url = reverse("shopapp:orders")
+            return redirect(url)
+    else:
+        form = OrderForm()
+    context = {
+        "form": form
+    }
+    return render(request, "shopapp/create-order.html", context=context)
