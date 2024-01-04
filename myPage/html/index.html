@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Портфолио</title>
+</head>
+
+<body>
+    <!-- Pop Up Container for form -->
+    <div class="popup-container">
+        <form class="popup" method="get">
+            <h2>Связь с нами</h2>
+            <input type="text" placeholder="Введите ваше имя" required>
+            <input type="email" placeholder="Введите вашу электронную почту" required>
+            <input type="submit" value="Отправить">
+        </form>
+    </div>
+    <!--Main Page -->
+    <header>
+        <div class="fixed-container">
+            <div class="urls">
+                <a href="#services">Услуги</a>
+                <a href="#portfolio">Портфолио</a>
+                <a href="#price">Стоимость</a>
+            </div>
+            <div class="contacts">
+                <span>+7(499)995 77 55</span>
+                <button class="light-button open-popup">Заказать звонок</button>
+            </div>
+        </div>
+    </header>
+    <section class="first-block">
+        <div class="fixed-container">
+            <h1>Дмитрий Алексеев</h1>
+            <p>Frontend-разработчик и веб-верстальщик</p>
+            <button class="dark-button open-popup">Узнать больше</button>
+        </div>
+    </section>
+    <section id="services">
+        <div class="fixed-container">
+            <h2>Что я делаю</h2>
+            <div class="services">
+                <div>
+                    <img src="../images/services/1.png" alt="services1">
+                    <span>Вёрстка лендинг-страниц и сайтов любой сложности</span>
+                </div>
+                <div>
+                    <img src="../images/services/2.png" alt="services2">
+                    <span>Адаптивная вёрстка под все браузеры и устройства</span>
+                </div>
+                <div>
+                    <img src="../images/services/3.png" alt="services3">
+                    <span>Frontend-разработка и программирование</span>
+                </div>
+                <div>
+                    <img src="../images/services/4.png" alt="services4">
+                    <span>Исправление и доработка существующей вёрстки</span>
+                </div>
+            </div>
+            <button class="light-button open-popup">Узнать стоимость</button>
+        </div>
+    </section>
+    <section id="portfolio">
+        <div class="fixed-container">
+            <h2>Примеры работ</h2>
+            <div class="portfolio">
+                <div>
+                    <img src="../images/portfolio/e1.png" alt="example1">
+                    <span>Сайт психолога Веры Антоновой</span>
+                </div>
+                <div>
+                    <img src="../images/portfolio/e2.png" alt="example2">
+                    <span>Сайт магазина детской одежды</span>
+                </div>
+                <div>
+                    <img src="../images/portfolio/e3.png" alt="example3">
+                    <span>Сайт магазина «Рыболов»</span>
+                </div>
+            </div>
+            <button class="light-button open-popup">Заказать проект</button>
+        </div>
+    </section>
+    <section id="price">
+        <div class="fixed-container">
+            <div class="price">
+                <h2>
+                    Адаптивная вёрстка под все устройства и браузеры от 1000 ₽ всего за 4 часа.*
+                </h2>
+                <p>* Срок и стоимость могут отличаться от заявленных и рассчитываются индивидуально, в зависимости от
+                    сложности задач.</p>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="fixed-container">
+            <div class="urls-footer">
+                <a href="#services">Услуги</a>
+                <a href="#portfolio">Портфолио</a>
+                <a href="#price">Стоимость</a>
+            </div>
+            <div class="contacts-footer">
+                <p>dmitry@alekseev.com</p>
+                <p>+7(499)995 77 55</p>
+            </div>
+            <div class="social-content">
+                <button class="light-button open-popup">Заказать звонок</button>
+                <div class="social">
+                    <a href="#"><img src="../images/icons/fb.png" alt="facebook"></a>
+                    <a href="#"><img src="../images/icons/vk.png" alt="vk"></a>
+                    <a href="#"><img src="../images/icons/you.png" alt="youtube"></a>
+                    <a href="#"><img src="../images/icons/telegram.png" alt="telegram"></a>
+                    <a href="#"><img src="../images/icons/inst.png" alt="instagram"></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var container = document.querySelector('.popup-container');
+            var popupButtons = document.querySelectorAll('.open-popup');
+            for (let i = 0; i < popupButtons.length; i++) {
+                popupButtons[i].addEventListener('click', function () {
+                    container.style.display = 'flex';
+                });
+            }
+
+
+            container.addEventListener('click', function (event) {
+                if (event.target == container) {
+                    container.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
