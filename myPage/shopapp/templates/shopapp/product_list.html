@@ -7,7 +7,7 @@ Product List
 {% block body %}
 <h1>Product List</h1>
 <div>
-    <a href={% url "shopapp:create_product" %} >Create</a>
+    <a href={% url "shopapp:product_create" %} >Create</a>
 </div>
 <div>
     {% if products %}
@@ -15,7 +15,7 @@ Product List
             <span>
                 <div>
                     <br>
-                    <p>Name : {{product.name}}</p>
+                    <p><a href={% url "shopapp:product_detail" pk=product.pk %}>Name : {{product.name}}</a></p>
                     <p>Price : {{product.price}}</p>
                     <p>Discount : {{product.discount}}</p>
                     <hr>
@@ -27,6 +27,6 @@ Product List
     {% endif %}
 </div>
 
-<a href={% url "shopapp:index" %} >Back</a>
+<a href={% url "shopapp:index_shop" %} >Back</a>
 
 {% endblock body %}

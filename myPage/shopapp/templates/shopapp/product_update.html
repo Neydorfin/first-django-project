@@ -1,0 +1,23 @@
+{% extends "shopapp/base.html" %}
+
+{% block title %}
+Update Product
+{% endblock title %}
+
+
+{% block body %}
+<h1>
+    Update Product
+</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">
+        Update
+    </button>
+</form>
+
+<p>
+<a href={% url "shopapp:product_detail" pk=product.pk %}>Back to Product</a>
+</p>
+{% endblock body %}

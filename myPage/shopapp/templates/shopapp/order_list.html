@@ -7,7 +7,7 @@ Order List
 {% block body %}
 <h1>Order List</h1>
 <p>
-    <a href={% url "shopapp:create_order" %} >Create</a>
+    <a href={% url "shopapp:order_create" %} >Create</a>
 </p>
 {% if orders %}
 <div>
@@ -30,6 +30,6 @@ Order List
 <h2>No order yet</h2>
 {% endif %}
 
-<a href={% url "shopapp:index" %} >Back</a>
+<a href={% url "shopapp:index_shop" %} >Back</a>
 
 {% endblock body %}
