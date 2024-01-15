@@ -13,7 +13,7 @@ class ThrottlingMiddleware:
         ip = request.META.get('REMOTE_ADDR')
         dt = time.time()
         if self.ips.get(ip, None) is not None:
-            if dt - self.ips[ip] < 3 and request.method == "POST":
+            if dt - self.ips[ip] < 0.5 and request.method == "POST":
                 raise Exception("TO MANY REQUEST")
         self.ips[ip] = dt
         response = self.get_response(request)
