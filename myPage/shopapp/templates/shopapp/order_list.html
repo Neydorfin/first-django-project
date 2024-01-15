@@ -13,17 +13,10 @@ Order List
 <div>
     {% for order in orders %}
         <hr>
-        <p>Order by: {% firstof order.user.username order.user.firstname %}</p>
+        <p><a href={% url "shopapp:order_detail" pk=order.pk%}>Order by: {% firstof order.user.username order.user.firstname %}</a></p>
         <p>Delivery Address: {{order.delivery_address}}</p>
         <p>Promocode <code>{{order.promocode}}</code></p>
-        <h4>Products: </h4>
-        <ul style="list-style: none;">
-            {% for product in order.products.all %}
-                <li>{{product.name}} -> {{product.price}}</li>
-            {% endfor %}
-        </ul>
     {% endfor %}
-
 
 </div>
 {% else %}

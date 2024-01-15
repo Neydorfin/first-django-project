@@ -1,10 +1,10 @@
+from typing import Any
 from django.shortcuts import redirect, render
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.core.files.storage import FileSystemStorage
 from django.urls import reverse, reverse_lazy
-from django.utils import archive
 from django.views import View
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from shopapp.forms import OrderForm, ProductForm
 
 from shopapp.models import Order, Product
@@ -68,27 +68,41 @@ class ProductArchivedView(DeleteView):
         return HttpResponseRedirect(success_url)
 
 
-def order_page(request: HttpRequest) -> HttpResponse:
-    context = {
-        "orders": Order.objects.select_related("user").prefetch_related("products").all()
-    }
-    return render(request, 'shopapp/order_list.html', context=context)
+class OrderListView(ListView):
+    model = Order
+    template_name = "shopapp/order_list.html"
+    context_object_name = "orders"
 
 
-def create_order(request: HttpRequest) -> HttpResponse:
-    print(request.user)
-    if request.method == "POST":
-        form = OrderForm(request.POST)
-        if form.is_valid():
-            form.save()
-            url = reverse("shopapp:orders")
-            return redirect(url)
-    else:
-        form = OrderForm()
-    context = {
-        "form": form
-    }
-    return render(request, "shopapp/order_create.html", context=context)
+class OrderDetailView(DetailView):
+    model = Order
+    template_name = "shopapp/order_detail.html"
+    context_object_name = "order"
+
+
+class OrderCreateView(CreateView):
+    model = Order
+    template_name = "shopapp/order_create.html"
+    form_class = OrderForm
+    success_url = reverse_lazy("shopapp:order_list")
+
+
+class OrderUpdateView(UpdateView):
+    model = Order
+    form_class = OrderForm
+    template_name = "shopapp/order_update.html"
+
+    def get_success_url(self) -> str:
+        return reverse(
+            "shopapp:order_detail",
+            kwargs={"pk": self.object.pk}
+        )
+
+
+class OrderDeleteView(DeleteView):
+    model = Order
+    template_name = "shopapp/order_delete.html"
+    success_url = reverse_lazy("shopapp:order_list")
 
 
 def upload_file(request: HttpRequest) -> HttpResponse:

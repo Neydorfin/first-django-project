@@ -17,16 +17,24 @@ Uploading File
         <button type="submit">Upload</button>
     </form>
 </div>
-<div>
-    <p>
-        File : {{name}}
-    </p>
-    <p>
-        {% if size == "error" %}
-            Size : <p style='color:red'> Ошибка: Файл слишком большой!!! </p> 
-        {% else %}
-            Size : {{size}} bytes
-        {% endif %}
-    </p>
-</div>
+{% if name %}
+    <div>
+        <p>
+            File : {{name}}
+        </p>
+        <p>
+            {% if size == "error" %}
+                Size : <p style='color:red'> Ошибка: Файл слишком большой!!! </p> 
+            {% else %}
+                Size : {{size}} bytes
+            {% endif %}
+        </p>
+    </div>
+{% else %}
+    <br>
+    <hr>
+    <div>
+        No File Uploaded
+    </div>
+{% endif %}
 {% endblock body %}
