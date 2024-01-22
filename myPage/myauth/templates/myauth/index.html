@@ -23,6 +23,9 @@ Main
             {% csrf_token %}
             <button type="submit">Logout</button>
         </form>
+        <p>
+            <a href={% url 'shopapp:index_shop' %}>Go to shop</a>
+        </p>
     {% else %}
         <h1>User is Anonymous</h1>
         <a href={% url 'accounts:login' %}>Go to login</a>

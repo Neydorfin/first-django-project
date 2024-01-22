@@ -69,7 +69,7 @@ class ProductAdmin(admin.ModelAdmin):
         (
             "Extra Options",
             {
-                "fields": ("archived",),
+                "fields": ("archived","created_by",),
                 "classes": ("collapse",),
             },
         ),

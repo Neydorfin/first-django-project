@@ -6,15 +6,18 @@ Product List
 
 {% block body %}
 <h1>Product List</h1>
+{% if perms.shopapp.add_product or user.is_superuser %}
 <div>
     <a href={% url "shopapp:product_create" %} >Create</a>
 </div>
+{% endif %}
 <div>
     {% if products %}
         {% for product in products %}
             <span>
                 <div>
                     <br>
+                    <p>Seller: {% firstof product.created_by.username product.created_by.firstname %}</p>
                     <p><a href={% url "shopapp:product_detail" pk=product.pk %}>Name : {{product.name}}</a></p>
                     <p>Price : {{product.price}}</p>
                     <p>Discount : {{product.discount}}</p>
