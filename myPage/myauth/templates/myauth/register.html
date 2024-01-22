@@ -1,14 +1,16 @@
 {% extends "myauth/base.html" %}
+
 {% block title %}
-Login
+Register
 {% endblock title %}
 
 {% block body %}
-<h1>Login</h1>
+<h1>Register</h1>
 <form method="post">
     {% csrf_token %}
     {{form.as_p}}
-    <button type="submit">Login</button>
-    <a href={% url "accounts:register" %}>Register</a>
+    <input type="submit" value="Register">
+    <a href={% url "accounts:login" %}>Login</a>
 </form>
+
 {% endblock body %}

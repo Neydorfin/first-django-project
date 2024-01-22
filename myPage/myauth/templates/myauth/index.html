@@ -1,12 +1,30 @@
 {% extends "myauth/base.html" %}
 {% block title %}
-Logout
+Main
 {% endblock title %}
 
 {% block body %}
-<h1>Logout</h1>
-<form action="{% url 'myauth:logout' %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Logout</button>
-</form>
+    {% if user.is_authenticated %}
+        <p>
+            Name: {{user.username}}
+        </p>
+        <p>
+            Bio: {{user.profile.bio}}
+        </p>
+        <p>
+            First Name: {{user.first_name}}
+        </p>
+        <p>
+            Email: {{user.email}}
+        </p>
+        <hr>
+        <h2>Logout</h2>
+        <form action="{% url 'accounts:logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    {% else %}
+        <h1>User is Anonymous</h1>
+        <a href={% url 'accounts:login' %}>Go to login</a>
+    {% endif %}
 {% endblock body %}
