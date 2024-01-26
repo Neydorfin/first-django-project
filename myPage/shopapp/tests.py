@@ -45,7 +45,7 @@ class OrdersExportTestCase(TestCase):
 
     @classmethod
     def setUpClass(cls):
-        super(OrdersExportTestCase, cls).setUpClass()
+        super(OrdersExportTestCase, cls).setUpClass() # нужно было для loaddata из fixtures
         cls.user = User.objects.create(
             username="User", password="1111", is_staff=True)
 
