@@ -1,0 +1,91 @@
+[
+{
+    "model": "shopapp.order",
+    "pk": 2,
+    "fields": {
+        "user": 1,
+        "delivery_address": "Admin 12",
+        "promocode": "1984ADMIN",
+        "created_at": "2023-12-11T16:25:24.865Z",
+        "done": false,
+        "products": [
+            18,
+            19,
+            21,
+            22
+        ]
+    }
+},
+{
+    "model": "shopapp.order",
+    "pk": 3,
+    "fields": {
+        "user": 1,
+        "delivery_address": "ST. Lorem 12",
+        "promocode": "LOREM12",
+        "created_at": "2023-12-25T12:40:23.624Z",
+        "done": false,
+        "products": [
+            18,
+            20,
+            22,
+            25
+        ]
+    }
+},
+{
+    "model": "shopapp.order",
+    "pk": 4,
+    "fields": {
+        "user": 1,
+        "delivery_address": "st. Orderer 32",
+        "promocode": "123",
+        "created_at": "2023-12-25T12:47:28.661Z",
+        "done": false,
+        "products": [
+            18,
+            19,
+            24,
+            25,
+            26
+        ]
+    }
+},
+{
+    "model": "shopapp.order",
+    "pk": 6,
+    "fields": {
+        "user": 1,
+        "delivery_address": "Lorem 12",
+        "promocode": "",
+        "created_at": "2023-12-25T13:00:39.984Z",
+        "done": false,
+        "products": [
+            18,
+            20,
+            24,
+            25,
+            26
+        ]
+    }
+},
+{
+    "model": "shopapp.order",
+    "pk": 8,
+    "fields": {
+        "user": 1,
+        "delivery_address": "ABOBA 143",
+        "promocode": "1111",
+        "created_at": "2024-01-15T14:58:33.557Z",
+        "done": false,
+        "products": [
+            18,
+            20,
+            22,
+            23,
+            26,
+            28
+        ]
+    }
+}
+]

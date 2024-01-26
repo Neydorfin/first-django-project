@@ -1,0 +1,158 @@
+[
+{
+    "model": "shopapp.product",
+    "pk": 18,
+    "fields": {
+        "name": "milk",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et consectetur dolor. Pellentesque luctus nisi suscipit, dictum felis vestibulum, faucibus felis. Etiam nec vehicula mi.",
+        "price": "99.00",
+        "discount": 10,
+        "created_at": "2023-12-11T16:24:51.430Z",
+        "archived": false,
+        "created_by": 2
+    }
+},
+{
+    "model": "shopapp.product",
+    "pk": 19,
+    "fields": {
+        "name": "eggs",
+        "description": "Proin accumsan vestibulum tristique. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquet lobortis felis, eget rutrum eros dignissim lobortis. Aliquam ut cursus nulla.",
+        "price": "300.00",
+        "discount": 0,
+        "created_at": "2023-12-11T16:24:51.444Z",
+        "archived": false,
+        "created_by": 1
+    }
+},
+{
+    "model": "shopapp.product",
+    "pk": 20,
+    "fields": {
+        "name": "coffee",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin et lorem augue.",
+        "price": "400.00",
+        "discount": 25,
+        "created_at": "2023-12-11T16:24:51.452Z",
+        "archived": false,
+        "created_by": 1
+    }
+},
+{
+    "model": "shopapp.product",
+    "pk": 21,
+    "fields": {
+        "name": "bread",
+        "description": "Maecenas imperdiet, elit nec condimentum venenatis, massa justo tincidunt lacus, interdum tincidunt justo nisl eu sapien.",
+        "price": "55.00",
+        "discount": 0,
+        "created_at": "2023-12-11T16:24:51.459Z",
+        "archived": false,
+        "created_by": 1
+    }
+},
+{
+    "model": "shopapp.product",
+    "pk": 22,
+    "fields": {
+        "name": "butter",
+        "description": "Nam sapien erat, imperdiet ac sem eget, vulputate efficitur lectus.",
+        "price": "120.00",
+        "discount": 20,
+        "created_at": "2023-12-11T16:24:51.464Z",
+        "archived": false,
+        "created_by": 1
+    }
+},
+{
+    "model": "shopapp.product",
+    "pk": 23,
+    "fields": {
+        "name": "chesse",
+        "description": "Nulla non elit imperdiet, lobortis lacus ut, iaculis risus.",
+        "price": "300.00",
+        "discount": 40,
+        "created_at": "2023-12-11T16:24:51.473Z",
+        "archived": false,
+        "created_by": 1
+    }
+},
+{
+    "model": "shopapp.product",
+    "pk": 24,
+    "fields": {
+        "name": "banana",
+        "description": "banana",
+        "price": "200.00",
+        "discount": 10,
+        "created_at": "2023-12-11T16:24:51.479Z",
+        "archived": false,
+        "created_by": 1
+    }
+},
+{
+    "model": "shopapp.product",
+    "pk": 25,
+    "fields": {
+        "name": "kiwi",
+        "description": "sweets kiwi",
+        "price": "60.00",
+        "discount": 12,
+        "created_at": "2023-12-25T11:49:11.124Z",
+        "archived": false,
+        "created_by": 1
+    }
+},
+{
+    "model": "shopapp.product",
+    "pk": 26,
+    "fields": {
+        "name": "Apple",
+        "description": "rem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse luctus magna et tempus commodo. Aenean vehicula, ipsum ut fringilla pretium, mi magna semper diam, eu egestas sapien lorem id ligula.",
+        "price": "45.00",
+        "discount": 0,
+        "created_at": "2023-12-25T11:53:11.381Z",
+        "archived": false,
+        "created_by": 1
+    }
+},
+{
+    "model": "shopapp.product",
+    "pk": 27,
+    "fields": {
+        "name": "Ananas",
+        "description": "",
+        "price": "123.32",
+        "discount": 0,
+        "created_at": "2023-12-25T13:02:04.912Z",
+        "archived": false,
+        "created_by": 1
+    }
+},
+{
+    "model": "shopapp.product",
+    "pk": 28,
+    "fields": {
+        "name": "Mayonnaise",
+        "description": "Sauce made from vegetable oil, egg yolk, mustard, vinegar, salt and sugar.",
+        "price": "130.00",
+        "discount": 13,
+        "created_at": "2024-01-15T12:23:39.262Z",
+        "archived": false,
+        "created_by": 1
+    }
+},
+{
+    "model": "shopapp.product",
+    "pk": 31,
+    "fields": {
+        "name": "Avocado",
+        "description": "",
+        "price": "123.00",
+        "discount": 33,
+        "created_at": "2024-01-22T13:54:33.896Z",
+        "archived": false,
+        "created_by": 1
+    }
+}
+]
