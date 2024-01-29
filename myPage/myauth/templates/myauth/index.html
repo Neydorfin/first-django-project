@@ -5,6 +5,15 @@ Main
 
 {% block body %}
     {% if user.is_authenticated %}
+        {% if user.profile.avatar %}
+        <p>
+            <img src="{{user.profile.avatar.url}}" alt="{{user.profile.avatar.name}}">
+        </p>
+        {% else %}
+        <p>
+            Avator not found!
+        </p>
+        {% endif %}
         <p>
             Name: {{user.username}}
         </p>

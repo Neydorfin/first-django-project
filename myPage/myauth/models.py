@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 
 
 def avatar_directory_path(instance: "Profile", filename: str) -> str:
-    return "profile/{user_pk}/avatar/{filename}".format(
-        user_pk=instance.user.pk,
+    return "profile/{user}/avatar/{filename}".format(
+        user=instance.user,
         filename=filename,
     )
 

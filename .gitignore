@@ -162,3 +162,7 @@ cython_debug/
 # for vscode settings
 .vscode/
 .pylintrc
+
+
+# to not save image from user
+uploads/
