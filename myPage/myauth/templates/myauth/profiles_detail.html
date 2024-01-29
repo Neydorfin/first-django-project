@@ -1,0 +1,48 @@
+{% extends "myauth/base.html" %}
+{% block title %}
+{{profile.user.username}} Profile
+{% endblock title %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+        <div style="display: flex">
+            <div>
+                {% if profile.avatar %}
+                    <p>
+                        <img src="{{profile.avatar.url}}" alt="{{profile.avatar.name}}" style="max-width: 100px; margin: 10px">
+                    </p>
+                {% else %}
+                    <p>
+                        <img src="Avator not found!" alt="Avator not found!">
+                    </p>
+                {% endif %}
+            </div>
+            <div>
+                <p>
+                    Name: {{profile.user.username}}
+                </p>
+                <p>
+                    Bio: {{profile.user.profile.bio}}
+                </p>
+                <p>
+                    First Name: {{profile.user.first_name}}
+                </p>
+                <p>
+                    Email: {{profile.user.email}}
+                </p>
+            </div>
+        </div>
+        <hr>
+        <h2>Logout</h2>
+        <form action="{% url 'accounts:logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+        <p>
+            <a href={% url 'shopapp:index_shop' %}>Go to shop</a>
+        </p>
+    {% else %}
+        <h1>User is Anonymous</h1>
+        <a href={% url 'accounts:login' %}>Go to login</a>
+    {% endif %}
+{% endblock body %}

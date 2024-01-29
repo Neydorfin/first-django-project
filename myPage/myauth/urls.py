@@ -2,9 +2,12 @@ from django.urls import path
 from django.contrib.auth.views import LoginView
 
 from .views import (
-    IndexView, 
+    ProfileListView, 
+    ProfileDetailView, 
     MyLogoutView,
     RegisterView,
+
+
     cookie_get_view,
     cookie_set_view,
     session_get_view,
@@ -22,7 +25,8 @@ urlpatterns = [
             ),
     name="login"),
 
-    path("", IndexView.as_view(), name="index"),
+    path("", ProfileListView.as_view(), name="index"),
+    path("<int:pk>/", ProfileDetailView.as_view(), name="profile_detail"),
     path("logout/", MyLogoutView.as_view(), name="logout"),
     path("register/", RegisterView.as_view(), name="register"),
 

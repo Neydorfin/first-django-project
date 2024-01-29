@@ -1,12 +1,28 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView
-from .models import Profile
+from django.views.generic import TemplateView, CreateView, ListView, DetailView
+from myauth.models import Profile
+
+
+
+class ProfileListView(LoginRequiredMixin, ListView):
+    model = Profile
+    template_name = "myauth/profiles.html"
+    context_object_name = "profiles"
+
+
+class ProfileDetailView(LoginRequiredMixin, DetailView):
+    model = Profile
+    template_name = "myauth/profiles_detail.html"
+    context_object_name = "profile"
+
+
 
 class IndexView(TemplateView):
     template_name = "myauth/index.html"
