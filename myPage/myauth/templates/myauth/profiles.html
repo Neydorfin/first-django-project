@@ -21,7 +21,7 @@ Profiles List
                     </div>
                     <div>
                         <p>
-                            <a href={% url "accounts:profile_detail" pk=profile.pk %}>Name: {{profile.user.username}}</a>
+                            <a href={% url "accounts:profile_detail" username=profile.user.username %}>Name: {{profile.user.username}}</a>
                         </p>
                         <p>
                             Bio: {{profile.user.profile.bio}}
@@ -34,7 +34,7 @@ Profiles List
             <p>No profiles</p>
         {% endif %}
         <h2>Logout</h2>
-        <form action="{% url 'accounts:logout' %}" method="post">
+        <form method="post" action={% url 'accounts:logout' %}>
             {% csrf_token %}
             <button type="submit">Logout</button>
         </form>

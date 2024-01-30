@@ -1,5 +1,5 @@
 from django.urls import path
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 
 from .views import (
     ProfileListView, 
@@ -25,8 +25,8 @@ urlpatterns = [
             ),
     name="login"),
 
-    path("", ProfileListView.as_view(), name="index"),
-    path("<int:pk>/", ProfileDetailView.as_view(), name="profile_detail"),
+    path("", ProfileListView.as_view(), name="profile_list"),
+    path("<username>/", ProfileDetailView.as_view(), name="profile_detail"),
     path("logout/", MyLogoutView.as_view(), name="logout"),
     path("register/", RegisterView.as_view(), name="register"),
 

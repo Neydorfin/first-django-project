@@ -34,7 +34,7 @@
         </div>
         <hr>
         <h2>Logout</h2>
-        <form action="{% url 'accounts:logout' %}" method="post">
+        <form method="post" action={% url 'accounts:logout' %}>
             {% csrf_token %}
             <button type="submit">Logout</button>
         </form>
