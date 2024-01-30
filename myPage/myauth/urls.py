@@ -27,7 +27,7 @@ urlpatterns = [
 
     path("", ProfileListView.as_view(), name="profile_list"),
     path("<username>/", ProfileDetailView.as_view(), name="profile_detail"),
-    path("logout/", MyLogoutView.as_view(), name="logout"),
+    path("/logout/", MyLogoutView.as_view(), name="logout"),
     path("register/", RegisterView.as_view(), name="register"),
 
     path("cookie/get/", cookie_get_view, name="cookie_get"),

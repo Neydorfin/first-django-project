@@ -13,8 +13,15 @@
                     </p>
                 {% else %}
                     <p>
-                        <img src="Avator not found!" alt="Avator not found!">
+                        Avatar doesn't exits!
                     </p>
+                {% endif %}
+                {% if user.is_superuser or profile.user == user %}
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <p><button type="submit">Change</button></p>
+                    </form>
                 {% endif %}
             </div>
             <div>
@@ -30,6 +37,9 @@
                 <p>
                     Email: {{profile.user.email}}
                 </p>
+            </div>
+            <div style="align-self: end;">
+                <a href={% url "accounts:profile_list" %}>Назад к списку</a>
             </div>
         </div>
         <hr>

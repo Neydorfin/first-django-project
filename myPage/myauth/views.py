@@ -8,6 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, ListView, DetailView
 from myauth.models import Profile
+from myauth.forms import ProfileForm
 
 
 class ProfileListView(LoginRequiredMixin, ListView):
@@ -23,6 +24,20 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
 
     def get_object(self, queryset=None):
         return Profile.objects.get(user=User.objects.get(username=self.kwargs["username"]))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ProfileForm()  # Ваша форма
+        return context
+
+    def post(self, request, *args, **kwargs):
+        profile = self.get_object()
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse_lazy("accounts:profile_detail", kwargs={"username": profile.user.username}))
+        else:
+            return render(request, self.template_name, {'form': form, 'object': profile})
 
 
 class MyLogoutView(LogoutView):
