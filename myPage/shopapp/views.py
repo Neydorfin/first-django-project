@@ -7,7 +7,7 @@ from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from shopapp.forms import OrderForm, ProductForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
-from shopapp.models import Order, Product
+from shopapp.models import Order, Product, ProductImage
 
 
 class ShopIndex(View):
@@ -22,7 +22,7 @@ class ProductListView(LoginRequiredMixin, ListView):
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
-    model = Product
+    queryset = Product.objects.prefetch_related("images")
     template_name = "shopapp/product_detail.html"
     context_object_name = "product"
 
@@ -35,15 +35,18 @@ class ProductCreateView(PermissionRequiredMixin, CreateView):
     success_url = reverse_lazy("shopapp:product_list")
 
     # добавляем к продукту пользователя который создал его
-
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         response = super().form_valid(form)
+        for image in form.files.getlist("images"):
+            ProductImage.objects.create(
+                product=self.object,
+                image=image,
+            )
         return response
 
 
-class ProductUpdateView(PermissionRequiredMixin, UpdateView):
-    permission_required = "shopapp.change_product"
+class ProductUpdateView(UpdateView):
     model = Product
     template_name = "shopapp/product_update.html"
     form_class = ProductForm
@@ -55,16 +58,25 @@ class ProductUpdateView(PermissionRequiredMixin, UpdateView):
             kwargs={"pk": self.object.pk}
         )
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        for image in form.files.getlist("images"):
+            ProductImage.objects.create(
+                product=self.object,
+                image=image
+            )
+        return response
+
     # проверяем разрешения пользователя
     def dispatch(self, request, *args, **kwargs):
-        if not (request.user == self.get_object().created_by):
+        if not (request.user == self.get_object().created_by or request.user.is_staff or request.user.has_perm("shopapp.change_product")):
             return HttpResponseForbidden("You do not have permission to access this resource.")
         return super().dispatch(request, *args, **kwargs)
 
 
 class ProductArchivedView(PermissionRequiredMixin, DeleteView):
     permission_required = "shopapp.change_product"
-    model = Product
+    queryset = Product.objects.prefetch_related("images")
     template_name = "shopapp/product_archived.html"
     context_object_name = "product"
 

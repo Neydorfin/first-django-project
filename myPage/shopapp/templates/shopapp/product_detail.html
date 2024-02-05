@@ -13,6 +13,16 @@
     <p>Discount : {{product.discount}}</p>
     <p>Description : {{product.description}}</p>
     <p>Archived : {{product.archived}}</p>
+    <p>
+        <b>{{product.images.all|length}} images</b>
+    </p>
+    <div style="display: flex;">
+        {% for img in product.images.all %}
+        <img src="{{img.image.url}}" alt="{{img.image.name}}" style="height: 200px;">
+            {% empty %}
+            No images
+        {% endfor %}
+    </div>
     {% if perms.shopapp.change_product or user.is_superuser or product.created_by == user %}
         <a href={% url "shopapp:product_update" pk=product.pk %}>Update</a>
         <a href={% url "shopapp:product_archived" pk=product.pk %}>

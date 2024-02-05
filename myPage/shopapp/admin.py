@@ -2,7 +2,7 @@ from typing import Any
 from django.contrib import admin
 from django.db.models.query import QuerySet
 from django.http.request import HttpRequest
-from .models import Product, Order
+from .models import Order, Product, ProductImage
 
 
 @admin.action(description="Archive products")
@@ -27,6 +27,8 @@ def make_undone(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: Qu
 class OrderInline(admin.StackedInline):
     model = Product.orders.through
 
+class ProductImageInline(admin.StackedInline):
+    model = ProductImage
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -34,7 +36,10 @@ class ProductAdmin(admin.ModelAdmin):
         make_archived,
         make_unarchived,
     ]
-    inlines = [OrderInline]
+    inlines = [
+        OrderInline,
+        ProductImageInline,
+        ]
     list_display = (
         "pk",
         "name",
