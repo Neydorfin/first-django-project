@@ -1,8 +1,13 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.translation import gettext_lazy
 
 
 class Product(models.Model):
+    class Meta:
+        verbose_name = gettext_lazy("Product")
+        verbose_name_plural = gettext_lazy("Products")
+
     name = models.CharField(max_length=100)
     description = models.TextField(null=False, blank=True)
     price = models.DecimalField(default=0, max_digits=8, decimal_places=2)
@@ -30,6 +35,10 @@ class ProductImage(models.Model):
 
 
 class Order(models.Model):
+    class Meta:
+        verbose_name = gettext_lazy("Order")
+        verbose_name_plural = gettext_lazy("Orders")
+
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     delivery_address = models.TextField(blank=True)
     promocode = models.CharField(max_length=50)
