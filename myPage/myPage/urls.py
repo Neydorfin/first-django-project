@@ -21,12 +21,12 @@ from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
-    path('shop/', include('shopapp.urls')),
     path('accounts/', include('myauth.urls')),
 ]
 
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
+    path('shop/', include('shopapp.urls')),
 )
 
 

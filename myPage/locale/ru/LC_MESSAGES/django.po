@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-05 12:42+0000\n"
+"POT-Creation-Date: 2024-02-05 14:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,3 +50,75 @@ msgstr "Заказ"
 #: shopapp/models.py:40
 msgid "Orders"
 msgstr "Заказы"
+
+#: shopapp/templates/shopapp/product_detail.html:5
+msgid "detail"
+msgstr ""
+
+#: shopapp/templates/shopapp/product_detail.html:10
+msgctxt "product name"
+msgid "Name"
+msgstr "Название"
+
+#: shopapp/templates/shopapp/product_detail.html:12
+msgid "Seller"
+msgstr "Продавец"
+
+#: shopapp/templates/shopapp/product_detail.html:13
+msgid ""
+"\n"
+"        <p>Price : %(price)s</p>\n"
+"        <p>Discount : %(discount)s</p>\n"
+"        <p>Description : %(description)s</p>\n"
+"        <p>Archived : %(archived)s</p>\n"
+"    "
+msgstr ""
+"\n"
+"        <p>Цена : %(price)s</p>\n"
+"        <p>Скидка : %(discount)s</p>\n"
+"        <p>Описание : %(description)s</p>\n"
+"        <p>Архивирован : %(archived)s</p>\n"
+"    "
+
+#: shopapp/templates/shopapp/product_detail.html:20
+#, python-format
+msgid ""
+"\n"
+"        <b>There is only one image.</b>\n"
+"        "
+msgid_plural ""
+"\n"
+"        <b>There are %(counter)s images.</b>\n"
+"        "
+msgstr[0] ""
+"\n"
+"        <b>Есть только одно изображение.</b>\n"
+"        "
+msgstr[1] ""
+"\n"
+"        <b>Есть %(counter)s изображения.</b>\n"
+"        "
+msgstr[2] ""
+"\n"
+"        <b>Есть %(counter)s изображений.</b>\n"
+"        "
+
+#: shopapp/templates/shopapp/product_detail.html:30
+msgid "No images"
+msgstr "Нет изображений"
+
+#: shopapp/templates/shopapp/product_detail.html:34
+msgid "Update"
+msgstr "Обновить"
+
+#: shopapp/templates/shopapp/product_detail.html:37
+msgid "Unarchived"
+msgstr "Разархивировать"
+
+#: shopapp/templates/shopapp/product_detail.html:39
+msgid "Archived"
+msgstr "Архивировать"
+
+#: shopapp/templates/shopapp/product_detail.html:46
+msgid "Back"
+msgstr "Назад"

@@ -1,41 +1,48 @@
 {% extends "shopapp/base.html" %}
+{% load i18n %}
 
 {% block title %}
-{{product.name}} detail
+    {{product.name}} {% translate "detail" %} 
 {% endblock title %}
 
 {% block body %}
 <div>
-    <h1>Name : {{product.name}}</h1>
+    <h1>{% translate "Name" context "product name" %} : {{product.name}}</h1>
     <br>
-    <p>Seller : {% firstof product.created_by.username product.created_by.firstname %}</p>
-    <p>Price : {{product.price}}</p>
-    <p>Discount : {{product.discount}}</p>
-    <p>Description : {{product.description}}</p>
-    <p>Archived : {{product.archived}}</p>
+    <p>{% translate "Seller" %} : {% firstof product.created_by.username product.created_by.firstname %}</p>
+    {% blocktranslate with price=product.price discount=product.discount description=product.description archived=product.archived%}
+        <p>Price : {{price}}</p>
+        <p>Discount : {{discount}}</p>
+        <p>Description : {{description}}</p>
+        <p>Archived : {{archived}}</p>
+    {% endblocktranslate %}
     <p>
-        <b>{{product.images.all|length}} images</b>
+        {% blocktranslate count counter=product.images.all|length %}
+        <b>There is only one image.</b>
+        {% plural %}
+        <b>There are {{ counter }} images.</b>
+        {% endblocktranslate %}
     </p>
     <div style="display: flex;">
         {% for img in product.images.all %}
         <img src="{{img.image.url}}" alt="{{img.image.name}}" style="height: 200px;">
             {% empty %}
-            No images
+            {% translate "No images" %}
         {% endfor %}
     </div>
     {% if perms.shopapp.change_product or user.is_superuser or product.created_by == user %}
-        <a href={% url "shopapp:product_update" pk=product.pk %}>Update</a>
+        <a href={% url "shopapp:product_update" pk=product.pk %}>{% translate "Update" %}</a>
         <a href={% url "shopapp:product_archived" pk=product.pk %}>
             {% if product.archived %}
-                Unarchived
+                {% translate "Unarchived" %}
             {% else %}
-                Archived
+                {% translate "Archived" %}
             {% endif %}
         </a>
     {% endif %}
     <hr>
 </div>
 
-<a href={% url "shopapp:product_list" %}>Back</a>
+<a href={% url "shopapp:product_list" %}>{% translate "Back" %}</a>
 
 {% endblock body %}
