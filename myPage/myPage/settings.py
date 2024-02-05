@@ -14,6 +14,7 @@ from pathlib import Path
 from django.urls import reverse_lazy
 
 from django.conf.global_settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
+from django.utils.translation import gettext_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -53,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     
     'shopapp.middlewares.ThrottlingMiddleware',
 ]
@@ -119,6 +121,16 @@ USE_I18N = True
 
 USE_TZ = True
 
+USE_L10N = True
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
+
+LANGUAGE = [
+    ("en", gettext_lazy("English")),
+    ("ru", gettext_lazy("Russian")),
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
