@@ -5,10 +5,39 @@ from django.core.files.storage import FileSystemStorage
 from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
-from shopapp.forms import OrderForm, ProductForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
-from shopapp.models import Order, Product, ProductImage
 
+from shopapp.models import Order, Product, ProductImage
+from shopapp.forms import OrderForm, ProductForm
+from shopapp.serializers import ProductSerializer, OrderSerializer
+
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+
+
+class ProductViewSet(ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    filter_backends = [
+        SearchFilter,
+        OrderingFilter,
+    ]
+    search_fields = ["name", "description"]
+    ordering_fields = ["pk", "name", "price"]
+    filterset_fields = ['name', 'description', 'price',
+                        'discount', 'created_by_id', 'archived']
+
+
+class OrderViewSet(ModelViewSet):
+    queryset = Order.objects.select_related(
+            "user").prefetch_related("products").all()
+    serializer_class = OrderSerializer
+    filter_backends = [
+        DjangoFilterBackend,
+        OrderingFilter,
+    ]
+    ordering_fields = ['created_at', 'user']
 
 class ShopIndex(View):
     def get(self, request: HttpRequest) -> HttpResponse:
@@ -145,7 +174,6 @@ class OrderDeleteView(PermissionRequiredMixin, DeleteView):
 
 
 class OrderExportView(View):
-
     def get(self, request: HttpRequest) -> JsonResponse:
         orders = Order.objects.select_related(
             "user").prefetch_related("products").all()
