@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     'shopapp.apps.ShopappConfig',
     'myauth.apps.MyauthConfig',
+    'blogapp.apps.BlogappConfig',
 
 ]
 
