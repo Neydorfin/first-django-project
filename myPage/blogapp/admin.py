@@ -1,5 +1,9 @@
+from typing import Any
 from django.contrib import admin
 from blogapp.models import Article, Tag, Category, Author
+from django.db.models.query import QuerySet
+from django.http import HttpRequest
+
 
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
@@ -17,11 +21,11 @@ class AuthorAdmin(admin.ModelAdmin):
         "pk",
         "name",
     )
+
     def bio_short(self, obj: Article) -> str:
         if len(obj.bio) > 48:
             return obj.bio[:48] + "..."
         return obj.bio
-
 
 
 @admin.register(Category)
@@ -39,6 +43,7 @@ class CategoryAdmin(admin.ModelAdmin):
         "pk",
         "name",
     )
+
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
@@ -60,11 +65,12 @@ class TagAdmin(admin.ModelAdmin):
 class TagInline(admin.StackedInline):
     model = Article.tags.through
 
+
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     inlines = [
         TagInline,
-        ]
+    ]
     list_display = (
         "pk",
         "title",
@@ -84,6 +90,9 @@ class ArticleAdmin(admin.ModelAdmin):
         "name",
         "category",
     )
+
+    def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
+        return Article.objects.select_related("author").prefetch_related("tags")
 
     def author_name(self, obj: Article) -> str:
         return obj.author.name

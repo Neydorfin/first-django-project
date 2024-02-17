@@ -10,7 +10,8 @@ Article List
 <div>
     {% for article in articles %}
         <hr>
-        <h3>Title: {{article.title}}</h3>
+        <h2>Title: {{article.title}}</h2>
+        <p>Date: {{article.pub_date}}</p>
         <p>Author: {{article.author.name}}</p>
         <p>Category: {{article.category.name}}</p>
         <p>Tags: 
@@ -20,8 +21,6 @@ Article List
                 No Tags
             {% endfor %}
         </p>
-        <p>Content: {{article.content}}</p>
-        <p>Date: {{article.pub_date}}</p>
         <br>
     {% endfor %}
 </div>
