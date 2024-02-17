@@ -76,6 +76,7 @@ class ArticleAdmin(admin.ModelAdmin):
     list_display_links = (
         "pk",
         "title",
+        "author_name",
     )
     ordering = ("pk",)
     search_fields = (
