@@ -9,7 +9,6 @@ Article List
 {% if articles %}
 <div>
     {% for article in articles %}
-        <hr>
         <h2>Title: {{article.title}}</h2>
         <p>Date: {{article.pub_date}}</p>
         <p>Author: {{article.author.name}}</p>
