@@ -1,0 +1,29 @@
+{% extends "shopapp/base.html" %}
+
+{% block title %}
+Article List
+{% endblock title %}
+
+{% block body %}
+<h1>Article List</h1>
+{% if articles %}
+<div>
+    {% for article in articles %}
+        <hr>
+        <h3>Title: {{article.title}}</h3>
+        <p>Author: {{article.author}}</p>
+        <p>Category: {{article.category}}</p>
+        <p>Tags: 
+            {% for tag in article.tags %}
+                tag
+            {% endfor %}
+        </p>
+        <p>Content: {{article.content}}</p>
+        <p>Date: {{article.pub_date}}</p>
+        <br>
+    {% endfor %}
+</div>
+{% else %}
+<h2>No articles yet</h2>
+{% endif %}
+{% endblock body %}
