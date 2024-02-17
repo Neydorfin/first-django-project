@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-05 14:15+0000\n"
+"POT-Creation-Date: 2024-02-17 15:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,43 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: myPage/settings.py:131
+#: blogapp/models.py:7
+msgid "Author"
+msgstr "Author"
+
+#: blogapp/models.py:8
+msgid "Authors"
+msgstr "Authors"
+
+#: blogapp/models.py:18
+msgid "Category"
+msgstr "Category"
+
+#: blogapp/models.py:19
+msgid "Categories"
+msgstr "Categories"
+
+#: blogapp/models.py:28
+msgid "Tag"
+msgstr "Tag"
+
+#: blogapp/models.py:29
+msgid "Tags"
+msgstr "Tags"
+
+#: blogapp/models.py:38
+msgid "Article"
+msgstr "Article"
+
+#: blogapp/models.py:39
+msgid "Articles"
+msgstr "Articles"
+
+#: myPage/settings.py:136
 msgid "English"
 msgstr "English"
 
-#: myPage/settings.py:132
+#: myPage/settings.py:137
 msgid "Russian"
 msgstr "Russian"
 
@@ -64,6 +96,7 @@ msgid "Seller"
 msgstr "Seller"
 
 #: shopapp/templates/shopapp/product_detail.html:13
+#, python-format
 msgid ""
 "\n"
 "        <p>Price : %(price)s</p>\n"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-05 14:15+0000\n"
+"POT-Creation-Date: 2024-02-17 15:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,11 +19,43 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: myPage/settings.py:131
+#: blogapp/models.py:7
+msgid "Author"
+msgstr "Автор"
+
+#: blogapp/models.py:8
+msgid "Authors"
+msgstr "Авторы"
+
+#: blogapp/models.py:18
+msgid "Category"
+msgstr "Категория"
+
+#: blogapp/models.py:19
+msgid "Categories"
+msgstr "Категории"
+
+#: blogapp/models.py:28
+msgid "Tag"
+msgstr "Тег"
+
+#: blogapp/models.py:29
+msgid "Tags"
+msgstr "Теги"
+
+#: blogapp/models.py:38
+msgid "Article"
+msgstr "Статья"
+
+#: blogapp/models.py:39
+msgid "Articles"
+msgstr "Статьи"
+
+#: myPage/settings.py:136
 msgid "English"
 msgstr "Англиский"
 
-#: myPage/settings.py:132
+#: myPage/settings.py:137
 msgid "Russian"
 msgstr "Русский"
 
@@ -65,6 +97,7 @@ msgid "Seller"
 msgstr "Продавец"
 
 #: shopapp/templates/shopapp/product_detail.html:13
+#, python-format
 msgid ""
 "\n"
 "        <p>Price : %(price)s</p>\n"
