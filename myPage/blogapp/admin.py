@@ -92,7 +92,7 @@ class ArticleAdmin(admin.ModelAdmin):
     )
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
-        return Article.objects.select_related("author").prefetch_related("tags")
+        return Article.objects.select_related("author").select_related("category").prefetch_related("tags")
 
     def author_name(self, obj: Article) -> str:
         return obj.author.name
