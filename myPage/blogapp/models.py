@@ -30,3 +30,6 @@ class Article(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, null=True, blank=True)
+
+    def __str__(self) -> str:
+        return f"{self.pk}.{self.title}"

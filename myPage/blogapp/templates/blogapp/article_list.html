@@ -11,11 +11,13 @@ Article List
     {% for article in articles %}
         <hr>
         <h3>Title: {{article.title}}</h3>
-        <p>Author: {{article.author}}</p>
-        <p>Category: {{article.category}}</p>
+        <p>Author: {{article.author.name}}</p>
+        <p>Category: {{article.category.name}}</p>
         <p>Tags: 
-            {% for tag in article.tags %}
-                tag
+            {% for tag in article.tags.all %}
+                {{tag.name}},
+            {%empty%}
+                No Tags
             {% endfor %}
         </p>
         <p>Content: {{article.content}}</p>
