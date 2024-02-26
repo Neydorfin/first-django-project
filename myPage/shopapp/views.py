@@ -45,12 +45,12 @@ class OrderViewSet(ModelViewSet):
 class ShopIndex(View):
     
     def get(self, request: HttpRequest) -> HttpResponse:
-        logger.debug("Used %s class", self.__class__.__name__)
+        logger.info("Used %s class", self.__class__.__name__)
         return render(request, 'shopapp/index.html')
 
 
 class ProductListView(LoginRequiredMixin, ListView):
-    queryset = Product.objects.filter(archived=False)
+    queryset = Product.objects.select_related("created_by").filter(archived=False)
     template_name = "shopapp/product_list.html"
     context_object_name = "products"
 
