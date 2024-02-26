@@ -1,3 +1,4 @@
+import logging
 from typing import Any
 from django.shortcuts import redirect, render
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, HttpResponseForbidden, JsonResponse
@@ -16,8 +17,10 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 
+logger = logging.getLogger(__name__)
+
 class ProductViewSet(ModelViewSet):
-    queryset = Product.objects.all()
+    queryset = Product.objects.select_related("created_by").prefetch_related("images").all()
     serializer_class = ProductSerializer
     filter_backends = [
         SearchFilter,
@@ -40,7 +43,9 @@ class OrderViewSet(ModelViewSet):
     ordering_fields = ['created_at', 'user']
 
 class ShopIndex(View):
+    
     def get(self, request: HttpRequest) -> HttpResponse:
+        logger.debug("Used %s class", self.__class__.__name__)
         return render(request, 'shopapp/index.html')
 
 
