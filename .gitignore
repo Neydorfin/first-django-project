@@ -168,4 +168,6 @@ cython_debug/
 # to not save image from user
 uploads/
 
+# log files
+log/
 
