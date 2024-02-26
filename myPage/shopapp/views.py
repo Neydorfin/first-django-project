@@ -56,7 +56,7 @@ class ProductListView(LoginRequiredMixin, ListView):
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
-    queryset = Product.objects.prefetch_related("images")
+    queryset = Product.objects.prefetch_related("images").select_related("created_by")
     template_name = "shopapp/product_detail.html"
     context_object_name = "product"
 
