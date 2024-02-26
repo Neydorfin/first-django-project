@@ -30,6 +30,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+INTERNAL_IPS = [
+    "127.0.0.1"
+]
 
 # Application definition
 
@@ -41,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'debug_toolbar',
     'rest_framework',
     'django_filters',
     'drf_spectacular',
@@ -60,6 +64,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 
     'shopapp.middlewares.ThrottlingMiddleware',
 ]
@@ -201,7 +207,7 @@ LOGGING = {
     },
     "root": {
         "handlers": ["console", "logfile"],
-        "level": "DEBUG",
+        "level": "INFO",
     },
     'filters': {
         'require_debug_true': {
