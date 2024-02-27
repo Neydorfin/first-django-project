@@ -16,6 +16,15 @@ from django.urls import reverse_lazy
 from django.conf.global_settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
 from django.utils.translation import gettext_lazy
 
+
+import sentry_sdk
+
+sentry_sdk.init(
+    dsn="https://14343686902fae55c27b9f1062a7f54c@o4506819404496896.ingest.sentry.io/4506819412099072",
+    traces_sample_rate=1.0,
+    profiles_sample_rate=1.0,
+)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
