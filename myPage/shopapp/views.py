@@ -50,7 +50,7 @@ class ShopIndex(View):
 
 
 class ProductListView(LoginRequiredMixin, ListView):
-    queryset = Product.objects.select_related("created_by").filter(archived=False)
+    queryset = Product.objects.select_related("created_by").prefetch_related("images").filter(archived=False)
     template_name = "shopapp/product_list.html"
     context_object_name = "products"
 

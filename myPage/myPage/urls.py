@@ -20,17 +20,25 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from django.contrib.sitemaps.views import sitemap
+from .sitemaps import sitemaps
 
 urlpatterns = [
     path('accounts/', include('myauth.urls')),
     path('blog/', include('blogapp.urls')),
     path('api/schema/', SpectacularAPIView.as_view(), name="schema"),
-    path('api/schema/swagger', SpectacularSwaggerView.as_view(url_name="schema"), name="swagger"),
+    path('api/schema/swagger',
+         SpectacularSwaggerView.as_view(url_name="schema"), name="swagger"),
 ]
 
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
     path('shop/', include('shopapp.urls')),
+
+    path("sitemap.xml/", 
+        sitemap, 
+        {"sitemaps": sitemaps},
+        name="django.contrib.sitemaps.views.sitemap")
 )
 
 
