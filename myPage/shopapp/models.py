@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.urls import reverse
 from django.db import models
 from django.utils.translation import gettext_lazy
 
@@ -25,6 +26,10 @@ def product_images_path(instance: "ProductImage", filename: str) -> str:
         pk=instance.product.pk,
         filename=filename,
     )
+
+
+def get_absolute_url(self):
+    return reverse("shopapp:product_detail", kwargs={"pk": self.pk})
 
 
 class ProductImage(models.Model):
