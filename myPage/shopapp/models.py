@@ -17,6 +17,9 @@ class Product(models.Model):
     archived = models.BooleanField(default=False)
     created_by = models.ForeignKey(User, on_delete=models.PROTECT, default=1)
 
+    def get_absolute_url(self):
+        return reverse("shopapp:product_detail", kwargs={"pk": self.pk})
+
     def __str__(self) -> str:
         return f"{self.pk}. {self.name}"
 
@@ -26,10 +29,6 @@ def product_images_path(instance: "ProductImage", filename: str) -> str:
         pk=instance.product.pk,
         filename=filename,
     )
-
-
-def get_absolute_url(self):
-    return reverse("shopapp:product_detail", kwargs={"pk": self.pk})
 
 
 class ProductImage(models.Model):
