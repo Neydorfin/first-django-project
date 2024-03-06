@@ -1,23 +1,42 @@
 import logging
 from typing import Any
+
+from django.contrib.syndication.views import Feed
 from django.shortcuts import redirect, render
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, HttpResponseForbidden, JsonResponse
 from django.core.files.storage import FileSystemStorage
 from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
-from shopapp.models import Order, Product, ProductImage
-from shopapp.forms import OrderForm, ProductForm
-from shopapp.serializers import ProductSerializer, OrderSerializer
+from .models import Order, Product, ProductImage
+from .forms import OrderForm, ProductForm
+from .serializers import ProductSerializer, OrderSerializer
 
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
-
 logger = logging.getLogger(__name__)
+
+
+class LatestProductsFeed(Feed):
+    title = "Shop Products (Latest)"
+    description = ""
+    link = reverse_lazy("shopapp:product_list")
+
+    def items(self):
+        return (
+            Product.objects.filter(archived=False).order_by("-created_at")[:5]
+        )
+
+    def item_title(self, item: Product):
+        return item.name
+
+    def item_description(self, item: Product):
+        return item.description[:40]
+
 
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.select_related("created_by").prefetch_related("images").all()
@@ -34,7 +53,7 @@ class ProductViewSet(ModelViewSet):
 
 class OrderViewSet(ModelViewSet):
     queryset = Order.objects.select_related(
-            "user").prefetch_related("products").all()
+        "user").prefetch_related("products").all()
     serializer_class = OrderSerializer
     filter_backends = [
         DjangoFilterBackend,
@@ -42,8 +61,8 @@ class OrderViewSet(ModelViewSet):
     ]
     ordering_fields = ['created_at', 'user']
 
+
 class ShopIndex(View):
-    
     def get(self, request: HttpRequest) -> HttpResponse:
         logger.info("Used %s class", self.__class__.__name__)
         return render(request, 'shopapp/index.html')
@@ -103,7 +122,8 @@ class ProductUpdateView(UpdateView):
 
     # проверяем разрешения пользователя
     def dispatch(self, request, *args, **kwargs):
-        if not (request.user == self.get_object().created_by or request.user.is_staff or request.user.has_perm("shopapp.change_product")):
+        if not (request.user == self.get_object().created_by or request.user.is_staff or request.user.has_perm(
+                "shopapp.change_product")):
             return HttpResponseForbidden("You do not have permission to access this resource.")
         return super().dispatch(request, *args, **kwargs)
 
@@ -129,7 +149,7 @@ class ProductArchivedView(PermissionRequiredMixin, DeleteView):
         self.object.save()
         return HttpResponseRedirect(success_url)
 
-     # проверяем разрешения пользователя
+    # проверяем разрешения пользователя
     def dispatch(self, request, *args, **kwargs):
         if not (request.user == self.get_object().created_by):
             return HttpResponseForbidden("You do not have permission to access this resource.")
