@@ -1,11 +1,25 @@
 import csv
+import json
 
 from django.db.models import QuerySet
 from django.db.models.options import Options
 from django.http import HttpRequest, HttpResponse
+from django.core import serializers
 
 
-class ExportAsCSVMixin:
+class ExportMixin:
+    def export_as_json(self, request: HttpRequest, queryset: QuerySet):
+        meta: Options = self.model._meta
+        field_names = [field.name for field in meta.fields]
+        data = serializers.serialize("json", queryset, fields=field_names)
+
+        response = HttpResponse(data, content_type="application/json")
+        response["Content-Disposition"] = f"attachment; filename={meta}-export.json"
+
+        return response
+
+    export_as_json.short_description = "Export as JSON"
+
     def export_as_csv(self, request: HttpRequest, queryset: QuerySet):
         meta: Options = self.model._meta
         field_names = [field.name for field in meta.fields]

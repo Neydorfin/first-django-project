@@ -3,7 +3,8 @@ from django.contrib import admin
 from django.db.models.query import QuerySet
 from django.http.request import HttpRequest
 from .models import Order, Product, ProductImage
-from .admin_mixins import ExportAsCSVMixin
+from .admin_mixins import ExportMixin
+
 
 @admin.action(description="Archive products")
 def make_archived(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: QuerySet) -> None:
@@ -24,23 +25,27 @@ def make_done(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: Quer
 def make_undone(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: QuerySet) -> None:
     queryset.update(done=False)
 
+
 class OrderInline(admin.StackedInline):
     model = Product.orders.through
+
 
 class ProductImageInline(admin.StackedInline):
     model = ProductImage
 
+
 @admin.register(Product)
-class ProductAdmin(admin.ModelAdmin, ExportAsCSVMixin):
+class ProductAdmin(admin.ModelAdmin, ExportMixin):
     actions = [
         make_archived,
         make_unarchived,
         "export_as_csv",
+        "export_as_json",
     ]
     inlines = [
         OrderInline,
         ProductImageInline,
-        ]
+    ]
     list_display = (
         "pk",
         "name",
@@ -75,7 +80,7 @@ class ProductAdmin(admin.ModelAdmin, ExportAsCSVMixin):
         (
             "Extra Options",
             {
-                "fields": ("archived","created_by",),
+                "fields": ("archived", "created_by",),
                 "classes": ("collapse",),
             },
         ),
