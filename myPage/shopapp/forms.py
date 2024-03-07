@@ -1,12 +1,10 @@
-from cProfile import label
 from django import forms
-from django.core import validators
-from django.forms import widgets
-
 from .models import Order, Product
+
 
 class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
+
 
 class MultipleFileField(forms.FileField):
     def __init__(self, *args, **kwargs):
@@ -20,6 +18,7 @@ class MultipleFileField(forms.FileField):
         else:
             result = single_file_clean(data, initial)
         return result
+
 
 class ProductForm(forms.ModelForm):
     price = forms.DecimalField(min_value=0)
@@ -42,8 +41,12 @@ class OrderForm(forms.ModelForm):
         required=True,
     )
 
-    promocode = forms.CharField(required=False,)
+    promocode = forms.CharField(required=False, )
 
     class Meta:
         model = Order
         fields = "user", "delivery_address", "promocode", "products"
+
+
+class JSONImportForm(forms.Form):
+    json_file = forms.FileField()
