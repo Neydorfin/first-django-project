@@ -144,10 +144,12 @@ class ProductInline(admin.StackedInline):
 
 
 @admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
+class OrderAdmin(admin.ModelAdmin, ExportMixin):
     actions = [
         make_done,
         make_undone,
+        "export_as_csv",
+        "export_as_json",
     ]
     inlines = [ProductInline]
     list_display = (
