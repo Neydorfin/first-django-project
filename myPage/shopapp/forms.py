@@ -50,7 +50,3 @@ class OrderForm(forms.ModelForm):
 
 class JSONImportForm(forms.Form):
     json_file = forms.FileField()
-
-
-class CSVImportForm(forms.Form):
-    csv_file = forms.FileField()

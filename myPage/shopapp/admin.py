@@ -12,7 +12,7 @@ from django.urls import path
 
 from .models import Order, Product, ProductImage
 from .admin_mixins import ExportMixin
-from .forms import JSONImportForm, CSVImportForm
+from .forms import JSONImportForm
 
 
 @admin.action(description="Archive products")
@@ -121,9 +121,15 @@ class ProductAdmin(admin.ModelAdmin, ExportMixin):
             encoding=request.encoding
         )
         data = json.load(json_file)
+
+        for obj in data:
+            user = obj['fields']['created_by']
+            obj['fields']['created_by'] = User.objects.get(pk=user)
+
         products = [
             Product(**obj.get("fields")) for obj in data
         ]
+
         Product.objects.bulk_create(products)
         self.message_user(request, "Data from Json was successful imported!")
         return redirect(".")
@@ -150,7 +156,6 @@ class OrderAdmin(admin.ModelAdmin, ExportMixin):
     actions = [
         make_done,
         make_undone,
-        "export_as_csv",
         "export_as_json",
     ]
     inlines = [ProductInline]
@@ -174,46 +179,45 @@ class OrderAdmin(admin.ModelAdmin, ExportMixin):
         "delivery_address",
     )
 
-    def import_csv(self, request: HttpRequest) -> HttpResponse:
+    def import_json(self, request: HttpRequest) -> HttpResponse:
         if request.method == "GET":
-            form = CSVImportForm()
+            form = JSONImportForm()
             context = {
                 "form": form,
             }
-            return render(request, "admin/csv_form.html", context=context)
+            return render(request, "admin/json_form.html", context=context)
 
-        form = CSVImportForm(request.POST, request.FILES)
+        form = JSONImportForm(request.POST, request.FILES)
         if not form.is_valid():
             context = {
                 "form": form,
             }
-            return render(request, "admin/csv_form.html", context=context, status=400)
+            return render(request, "admin/json_form.html", context=context, status=400)
 
-        csv_file = TextIOWrapper(
-            form.files["csv_file"].file,
-            encoding=request.encoding,
+        json_file = TextIOWrapper(
+            form.files["json_file"].file,
+            encoding=request.encoding
         )
-        reader = DictReader(csv_file)
-        for row in reader:
-            user = row['user']
-            row['user'] = User.objects.filter(pk=user)
+        data = json.load(json_file)
+        orders = []
+        for obj in data:
+            user = obj['fields'].pop("user")
+            products = obj['fields'].pop("products")
+            obj['fields']['user'] = User.objects.get(pk=user)
+            order = Order(**obj['fields'])
+            order.save()
+            order.products.set(products)
 
-        orders = [
-            Order(**row)
-            for row in reader
-        ]
-        Order.objects.bulk_create(orders)
-
-        self.message_user(request, "Data from csv was successful imported")
+        self.message_user(request, "Data from Json was successful imported!")
         return redirect(".")
 
     def get_urls(self):
         urls = super().get_urls()
         new_urls = [
             path(
-                "import-csv",
-                self.import_csv,
-                name="import_csv",
+                "import-json",
+                self.import_json,
+                name="import_json",
             )
         ]
         return new_urls + urls
