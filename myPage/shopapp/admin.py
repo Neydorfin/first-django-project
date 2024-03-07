@@ -1,8 +1,9 @@
+from csv import DictReader
 from io import TextIOWrapper
 import json
 from typing import Any
 from django.contrib import admin
-from django.core import serializers
+from django.contrib.auth.models import User
 from django.db.models.query import QuerySet
 from django.http import HttpResponse
 from django.http.request import HttpRequest
@@ -11,7 +12,7 @@ from django.urls import path
 
 from .models import Order, Product, ProductImage
 from .admin_mixins import ExportMixin
-from .forms import JSONImportForm
+from .forms import JSONImportForm, CSVImportForm
 
 
 @admin.action(description="Archive products")
@@ -145,6 +146,7 @@ class ProductInline(admin.StackedInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin, ExportMixin):
+    change_list_template = "shopapp/orders_changelist.html"
     actions = [
         make_done,
         make_undone,
@@ -171,6 +173,50 @@ class OrderAdmin(admin.ModelAdmin, ExportMixin):
         "user_name",
         "delivery_address",
     )
+
+    def import_csv(self, request: HttpRequest) -> HttpResponse:
+        if request.method == "GET":
+            form = CSVImportForm()
+            context = {
+                "form": form,
+            }
+            return render(request, "admin/csv_form.html", context=context)
+
+        form = CSVImportForm(request.POST, request.FILES)
+        if not form.is_valid():
+            context = {
+                "form": form,
+            }
+            return render(request, "admin/csv_form.html", context=context, status=400)
+
+        csv_file = TextIOWrapper(
+            form.files["csv_file"].file,
+            encoding=request.encoding,
+        )
+        reader = DictReader(csv_file)
+        for row in reader:
+            user = row['user']
+            row['user'] = User.objects.filter(pk=user)
+
+        orders = [
+            Order(**row)
+            for row in reader
+        ]
+        Order.objects.bulk_create(orders)
+
+        self.message_user(request, "Data from csv was successful imported")
+        return redirect(".")
+
+    def get_urls(self):
+        urls = super().get_urls()
+        new_urls = [
+            path(
+                "import-csv",
+                self.import_csv,
+                name="import_csv",
+            )
+        ]
+        return new_urls + urls
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
         return Order.objects.select_related("user").prefetch_related("products")
