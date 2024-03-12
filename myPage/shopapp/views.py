@@ -2,8 +2,9 @@ import logging
 
 from django.contrib.auth.models import User
 from django.contrib.syndication.views import Feed
-from django.shortcuts import redirect, render
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, HttpResponseForbidden, JsonResponse
+from django.shortcuts import redirect, render, get_object_or_404
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, HttpResponseForbidden, JsonResponse, \
+    HttpResponseNotFound
 from django.core.files.storage import FileSystemStorage
 from django.urls import reverse, reverse_lazy
 from django.views import View
@@ -27,7 +28,7 @@ class UserOrdersListView(ListView):
     context_object_name = "orders"
 
     def get_queryset(self):
-        self.owner = User.objects.get(pk=self.kwargs["user_id"])
+        self.owner = get_object_or_404(User, pk=self.kwargs["user_id"])
         queryset = Order.objects.select_related("user").prefetch_related("products").filter(user=self.owner)
         return queryset
 
