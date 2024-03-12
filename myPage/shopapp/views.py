@@ -33,11 +33,12 @@ class UserOrdersListExport(View):
         if order_export_data is None:
             self.owner = get_object_or_404(User, pk=user_id)
             owner = UserSerializer(self.owner)
-            queryset = Order.objects.select_related("user").prefetch_related("products").filter(user=self.owner)
-            data = serializers.serialize("json", queryset)
+            queryset = Order.objects.select_related("user").prefetch_related("products").filter(
+                user=self.owner).order_by("pk")
+            orders = OrderSerializer(queryset, many=True)
             order_export_data = {
                 "owner": owner.data,
-                "orders": json.loads(data),
+                "orders": orders.data,
             }
             cache.set(cache_key, order_export_data, 300)
         return JsonResponse(order_export_data)
