@@ -19,7 +19,7 @@ from .views import (
 
     ProductViewSet,
     OrderViewSet,
-
+    UserOrdersListView,
     upload_file,)
 
 app_name = "shopapp"
@@ -32,6 +32,8 @@ routers.register("orders", OrderViewSet)
 urlpatterns = [
     path("", ShopIndex.as_view(), name="index_shop"),
     path("api/", include(routers.urls)),
+    path("users/<int:user_id>/orders/", UserOrdersListView.as_view(), name="user_orders_list"),
+
     path("products", ProductListView.as_view(), name="product_list"),
     path("products/create", ProductCreateView.as_view(), name="product_create"),
     path("products/<int:pk>/", ProductDetailView.as_view(), name="product_detail"),

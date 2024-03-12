@@ -1,6 +1,6 @@
 import logging
-from typing import Any
 
+from django.contrib.auth.models import User
 from django.contrib.syndication.views import Feed
 from django.shortcuts import redirect, render
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, HttpResponseForbidden, JsonResponse
@@ -19,6 +19,22 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 logger = logging.getLogger(__name__)
+
+
+class UserOrdersListView(ListView):
+    model = Order
+    template_name = "shopapp/user_orders_list.html"
+    context_object_name = "orders"
+
+    def get_queryset(self):
+        self.owner = User.objects.get(pk=self.kwargs["user_id"])
+        queryset = Order.objects.select_related("user").prefetch_related("products").filter(user=self.owner)
+        return queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["owner"] = self.owner
+        return context
 
 
 class LatestProductsFeed(Feed):

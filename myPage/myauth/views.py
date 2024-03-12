@@ -7,8 +7,8 @@ from django.contrib.auth.views import LogoutView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, ListView, DetailView
-from myauth.models import Profile
-from myauth.forms import ProfileForm
+from .models import Profile
+from .forms import ProfileForm
 
 
 class ProfileListView(LoginRequiredMixin, ListView):

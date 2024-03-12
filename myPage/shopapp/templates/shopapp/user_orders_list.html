@@ -1,0 +1,27 @@
+{% extends "shopapp/base.html" %}
+{% load cache %}
+
+{% block title %}
+    User Orders List
+{% endblock title %}
+{% block body %}
+<h1>
+    The User {{owner.username}} has following orders
+</h1>
+    <h2>About User:</h2>
+    Username: {{owner.username}}
+    <h2>Orders:</h2>
+    {% for order in orders %}
+        <h3>Order number №{{order.pk}}</h3>
+        <p>Delivery Address: {{order.delivery_address}}</p>
+        <p>Promocode <code>{{order.promocode}}</code></p>
+        <h4>Products: </h4>
+        <ul style="list-style: none;">
+            {% for product in order.products.all %}
+                <li>{{product.name}} = {{product.price}}</li>
+            {% endfor %}
+        </ul>
+    {%empty%}
+    User {{owner.username}} has no orders yet
+    {% endfor %}
+{% endblock body %}
