@@ -23,7 +23,7 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "profile"
 
     def get_object(self, queryset=None):
-        return Profile.objects.get(user=User.objects.get(username=self.kwargs["username"]))
+        return Profile.objects.select_related("user").get(user=User.objects.get(username=self.kwargs["username"]))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -16,7 +16,6 @@ from django.urls import reverse_lazy
 from django.conf.global_settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
 from django.utils.translation import gettext_lazy
 
-
 import sentry_sdk
 
 sentry_sdk.init(
@@ -49,6 +48,7 @@ INTERNAL_IPS = [
 
 if DEBUG:
     import socket
+
     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
     INTERNAL_IPS.append("10.0.2.2")
     INTERNAL_IPS.extend(
@@ -112,7 +112,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myPage.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -122,7 +121,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -141,7 +139,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -173,7 +170,6 @@ STATIC_URL = 'static/'
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / 'uploads'
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -192,7 +188,6 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
-
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Site project API',
     'DESCRIPTION': 'My project with auth system and shop app',
@@ -206,7 +201,7 @@ LOGFILE_COUNT = 3
 
 LOGGING = {
     "version": 1,
-    "disable_existing_loggers": True,
+    "disable_existing_loggers": False,
     "formatters": {
         "verbose": {
             "format": "[%(asctime)s] \"%(levelname)s\" %(name)s: %(message)s",
@@ -229,7 +224,7 @@ LOGGING = {
     },
     "root": {
         "handlers": ["logfile"],
-        "level": "INFO",
+        "level": "DEBUG",
     },
     'filters': {
         'require_debug_true': {
@@ -239,7 +234,7 @@ LOGGING = {
     "loggers": {
         "django.db.backends": {
             "level": "DEBUG",
-            "handlers": ["console",],
+            "handlers": ["console", ],
         },
     },
 }

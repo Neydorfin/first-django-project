@@ -1,16 +1,20 @@
+import json
 import logging
 
 from django.contrib.auth.models import User
 from django.contrib.syndication.views import Feed
+from django.core import serializers
+from django.core.cache import cache
+
 from django.shortcuts import redirect, render, get_object_or_404
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, HttpResponseForbidden, JsonResponse, \
-    HttpResponseNotFound
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, HttpResponseForbidden, JsonResponse
 from django.core.files.storage import FileSystemStorage
 from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
+from myauth.serializers import UserSerializer
 from .models import Order, Product, ProductImage
 from .forms import OrderForm, ProductForm
 from .serializers import ProductSerializer, OrderSerializer
@@ -20,6 +24,23 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 logger = logging.getLogger(__name__)
+
+
+class UserOrdersListExport(View):
+    def get(self, request: HttpRequest, user_id) -> JsonResponse:
+        cache_key = f"order_export_user_{user_id}"
+        order_export_data = cache.get(cache_key)
+        if order_export_data is None:
+            self.owner = get_object_or_404(User, pk=user_id)
+            owner = UserSerializer(self.owner)
+            queryset = Order.objects.select_related("user").prefetch_related("products").filter(user=self.owner)
+            data = serializers.serialize("json", queryset)
+            order_export_data = {
+                "owner": owner.data,
+                "orders": json.loads(data),
+            }
+            cache.set(cache_key, order_export_data, 300)
+        return JsonResponse(order_export_data)
 
 
 class UserOrdersListView(ListView):

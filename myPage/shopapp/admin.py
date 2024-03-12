@@ -199,7 +199,6 @@ class OrderAdmin(admin.ModelAdmin, ExportMixin):
             encoding=request.encoding
         )
         data = json.load(json_file)
-        orders = []
         for obj in data:
             user = obj['fields'].pop("user")
             products = obj['fields'].pop("products")
