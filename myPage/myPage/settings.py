@@ -207,6 +207,28 @@ logging.config.dictConfig({
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
+        "console": {
+            "format": "[%(asctime)s] \"%(levelname)s\" [%(name)s: %(lineno)s] %(module)s %(message)s",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "console",
+        },
+    },
+    "loggers": {
+        "": {
+            "level": LOGLEVEL,
+            "handlers": ["console", ],
+        },
+    },
+})
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
         "verbose": {
             "format": "[%(asctime)s] \"%(levelname)s\" [%(name)s: %(lineno)s] %(module)s %(message)s",
         },
@@ -216,6 +238,13 @@ logging.config.dictConfig({
             "level": LOGLEVEL,
             "filters": ["require_debug_true"],
             "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+        "logfile": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": LOGFILE_NAME,
+            "maxBytes": LOGFILE_SIZE,
+            "backupCount": LOGFILE_COUNT,
             "formatter": "verbose",
         },
     },
@@ -232,4 +261,4 @@ logging.config.dictConfig({
             "handlers": ["console", ],
         },
     },
-})
+}
