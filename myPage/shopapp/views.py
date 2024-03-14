@@ -103,8 +103,7 @@ class OrderViewSet(ModelViewSet):
 
 class ShopIndex(View):
     def get(self, request: HttpRequest) -> HttpResponse:
-        logger.info("Used %s class", self.__class__.__name__)
-        return render(request, 'shopapp/index.html')
+        return render(request, 'shopapp/shop_index.html')
 
 
 class ProductListView(LoginRequiredMixin, ListView):
