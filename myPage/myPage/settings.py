@@ -9,10 +9,10 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-import os
+from os import getenv
 from pathlib import Path
 from django.urls import reverse_lazy
-
+import logging.config
 from django.conf.global_settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
 from django.utils.translation import gettext_lazy
 
@@ -27,20 +27,23 @@ sentry_sdk.init(
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+DATABASE_DIR = BASE_DIR / "database"
+DATABASE_DIR.mkdir(exist_ok=True)
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^&=&mge($-u_t&dr-@b+ky5b!#xh)-83gb@#*giqpp$!^$159!'
+SECRET_KEY = getenv("DJANGO_SECRET_KEY", 'django-insecure-^&=&mge($-u_t&dr-@b+ky5b!#xh)-83gb@#*giqpp$!^$159!')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = getenv("DJANGO_DEBUG", "0") == "1"
 
 ALLOWED_HOSTS = [
     "0.0.0.0",
     "localhost",
     "127.0.0.1",
-]
+] + getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -118,7 +121,7 @@ WSGI_APPLICATION = 'myPage.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': DATABASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -198,18 +201,19 @@ SPECTACULAR_SETTINGS = {
 LOGFILE_NAME = BASE_DIR / "log/log.txt"
 LOGFILE_SIZE = 1 * 1024 * 1024
 LOGFILE_COUNT = 3
+LOGLEVEL = getenv("DJANGO_LOGLEVEL", "info").upper()
 
-LOGGING = {
+logging.config.dictConfig({
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
         "verbose": {
-            "format": "[%(asctime)s] \"%(levelname)s\" %(name)s: %(message)s",
+            "format": "[%(asctime)s] \"%(levelname)s\" [%(name)s: %(lineno)s] %(module)s %(message)s",
         },
     },
     "handlers": {
         "console": {
-            "level": "DEBUG",
+            "level": LOGLEVEL,
             "filters": ["require_debug_true"],
             "class": "logging.StreamHandler",
             "formatter": "verbose",
@@ -224,7 +228,6 @@ LOGGING = {
     },
     "root": {
         "handlers": ["logfile"],
-        "level": "DEBUG",
     },
     'filters': {
         'require_debug_true': {
@@ -233,8 +236,7 @@ LOGGING = {
     },
     "loggers": {
         "django.db.backends": {
-            "level": "DEBUG",
             "handlers": ["console", ],
         },
     },
-}
+})
