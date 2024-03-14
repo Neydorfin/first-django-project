@@ -40,10 +40,10 @@ SECRET_KEY = getenv("DJANGO_SECRET_KEY", 'django-insecure-^&=&mge($-u_t&dr-@b+ky
 DEBUG = getenv("DJANGO_DEBUG", "0") == "1"
 
 ALLOWED_HOSTS = [
-    "0.0.0.0",
-    "localhost",
-    "127.0.0.1",
-] + getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
+                    "0.0.0.0",
+                    "localhost",
+                    "127.0.0.1",
+                ] + getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
 
 INTERNAL_IPS = [
     "127.0.0.1",
