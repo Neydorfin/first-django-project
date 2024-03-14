@@ -218,13 +218,6 @@ logging.config.dictConfig({
             "class": "logging.StreamHandler",
             "formatter": "verbose",
         },
-        "logfile": {
-            "class": "logging.handlers.RotatingFileHandler",
-            "filename": LOGFILE_NAME,
-            "maxBytes": LOGFILE_SIZE,
-            "backupCount": LOGFILE_COUNT,
-            "formatter": "verbose",
-        },
     },
     "root": {
         "handlers": ["logfile"],
