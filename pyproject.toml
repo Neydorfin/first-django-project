@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "mypage"
+version = "0.1.0"
+description = ""
+authors = ["Neydorfin <iongalin.02@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "5.0"
+djangorestframework = "^3.14.0"
+django-debug-toolbar = "^4.3.0"
+django-filter = "^24.1"
+drf-spectacular = "^0.27.1"
+pillow = "^10.2.0"
+gunicorn = "^21.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
